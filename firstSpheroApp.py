@@ -1,25 +1,32 @@
 import sphero
 from time import sleep
+from random import random
 
 ourSphero = sphero.Sphero()
 ourSphero.connect()
-sleep(0.5)
-ourSphero.set_rgb(0,0,0)
+sleep(1)
 
+#initiation , set to white, define list
+ourSphero.set_rgb(250,250,250)
 heading = 0
-color = [255,0,0]
 
-def switchcolor(color):
-  return [color[2],color[0],color[1]]
+color = [0,0,0]
 
-def switchheading(heading):
-  heading += 90
+def switchColor(color):
+  return [round(random()*255),color[0],color[1]]
+
+def switchHeading(heading):
+  heading += 30
   return heading % 360
 
-for i in range(1,10):
-  ourSphero.roll(50,heading,10)
+#
+for i in range(1,1000):
+  ourSphero.roll(50,heading)
   for j in range(1,3):
-    sleep(1)
+    sleep(0.02)
     ourSphero.set_rgb(color[0],color[1],color[2])
-    color = switchcolor(color)
-  heading = switchheading(heading)
+    color = switchColor(color)
+  heading = switchHeading(heading)
+  print i/10
+  
+sphero.roll(0,0)
